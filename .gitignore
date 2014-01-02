@@ -13,4 +13,4 @@
 *.a
 
 # Default executables
-*.outs
+*.out
