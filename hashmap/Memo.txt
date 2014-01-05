@@ -1,0 +1,5 @@
+TODO:
+
+1. Add linked chaining on hash collisions
+2. Implement the findFirstPrimeAbove() function
+3. Run large test cases
