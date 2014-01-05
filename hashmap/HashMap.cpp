@@ -30,7 +30,7 @@ HashMap<HashValue>::HashMap(size_t suggestedCapacity)
 	/* init empty array of current capacity */
 	hashMapArray = new MapNode<HashValue> * [currentCapacity];
 	for(unsigned int mapEntry = 0; mapEntry < currentCapacity; mapEntry++)
-		hashMapArray[mapEntry] = nullptr;
+		hashMapArray[mapEntry] = nullptr; 
 
 	DebugLogger::getInstance() << "Done Initializing container of size 100\n"; // db 
 
