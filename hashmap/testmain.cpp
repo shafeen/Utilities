@@ -22,7 +22,6 @@ void testMapNode()
 	printNode(&node1);
 }
 
-
 void hashMapInsertTest()
 {
 	string key("key1");
@@ -44,16 +43,32 @@ void hashMapInsertTest()
 
 	MapNode<int> *nodeptr2 = map->find(string("1key"));
 	assert(nodeptr2 == nullptr);
+	
+}
 
+void hashMapMultiNodeInsertTest()
+{
+	HashMap<int> *map = new HashMap<int>(100);
 
+	// insert a bunch // <<
+	map->insert(string("key1"), 1);  
+	map->insert(string("key2"), 2);  
+	map->insert(string("key3"), 3);  
+	map->insert(string("key4"), 4);  
+	map->insert(string("key5"), 5);  
+	map->insert(string("key6"), 6);  
+	map->insert(string("key7"), 7);  
+	map->insert(string("key8"), 8);  
+	map->insert(string("key9"), 9);  
+	
 }
 
 
 int main()
 {
 	// testMapNode();	
-	hashMapInsertTest();
-
+	// hashMapInsertTest();
+	hashMapMultiNodeInsertTest();
 
 
 }
