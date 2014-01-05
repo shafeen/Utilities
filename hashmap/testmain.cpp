@@ -1,24 +1,25 @@
-#include "MapNode.h"
-#include "HashMap.h"
 
+#include "HashMap.cpp"
 #include <iostream>
 #include <cstdio>
-// #include <thread>
-// #include <mutex>
 #include <cassert>
-#include "HashMap.h"
 
 using namespace std;
-using namespace shafeen;
+using namespace shafeen::data_structures;
+
+void printNode(MapNode<int> *node)
+{
+	printf("key: %s\tvalue: %d\n", node->key.c_str(), node->value);
+}
 
 void testMapNode()
 {
 	string key("key1");
 	int value = 1;
 	
-	shafeen::MapNode<int> node1(key, value);
+	MapNode<int> node1(key, value);
 
-	printf("key: %s\tvalue: %d\n", node1.key.c_str(), node1.value);
+	printNode(&node1);
 }
 
 
@@ -29,17 +30,21 @@ void hashMapInsertTest()
 	
 	MapNode<int> *node1 = new MapNode<int>(key, value);
 
-	shafeen::HashMap<int> *map = new shafeen::HashMap<int>();
+	HashMap<int> *map = new HashMap<int>(100);
+	cout << "CURRENT CAPACITY " << map->capacity() << endl;
+	map->insert(key, value); // << 
+	cout << "CURRENT NODES " << map->size() << endl;
+	map->insert(key, 2); // << 
+	cout << "CURRENT NODES " << map->size() << endl;
 
-	// map->insert(node1); // << 
+	MapNode<int> *nodeptr1 = map->find(key); // << 
+	assert(nodeptr1 != nullptr);
+	cout << "FOUND: ";
+	printNode(nodeptr1);
 
-	// MapNode<int> *nodeptr1 = map.find(key); // << 
-	// assert(nodeptr1 != nullptr);
+	MapNode<int> *nodeptr2 = map->find(string("1key"));
+	assert(nodeptr2 == nullptr);
 
-	// MapNode<int> *nodeptr2 = map.find(string("unknownKey"));
-	// assert(nodeptr2 == nullptr);
-
-	// cout << nodeptr1->value << endl;
 
 }
 

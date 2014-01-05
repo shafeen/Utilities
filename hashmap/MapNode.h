@@ -4,8 +4,9 @@
 #include <string>
 #include <iostream>
 
-namespace shafeen 
-{
+namespace shafeen {
+namespace data_structures {
+
 
 template <class T>
 class MapNode 
@@ -28,6 +29,7 @@ public:
 };
 
 
+}  /* namespace data_structures */
 }  /* namespace shafeen */
 
 

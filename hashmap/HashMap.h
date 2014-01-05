@@ -2,13 +2,14 @@
 #define _HASHMAP_H_
 
 #include "MapNode.h"
+#include "DebugLogger.h"
 #include <string>
 #include <vector>
 
 using namespace std;
 
-namespace shafeen
-{
+namespace shafeen {
+namespace data_structures {
 	
 template<class HashValue>
 class HashMap
@@ -29,10 +30,17 @@ public:
 
 	// returns the number of MapNodes contained
 	size_t size(){return mapNodesInHashMap;}
+	size_t capacity(){return currentCapacity;}
 
-	// disable copy constructor and assignment operator
+	void enableDebugOutput();
+	void disableDebugOutput();
+
+	// disable copy & move constructors
+	// and their assignment operators
 	HashMap(const HashMap&) = delete;
 	HashMap& operator=(const HashMap&) = delete;
+	HashMap(const HashMap&&) = delete;
+	HashMap& operator=(const HashMap&&) = delete;
 
 
 private:
@@ -51,7 +59,7 @@ private:
 
 };
 
-
+} /* namespace data_structures */
 } /* namespace shafeen */
 
 #endif
