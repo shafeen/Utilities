@@ -29,8 +29,8 @@ HashMap<HashValue>::HashMap(size_t suggestedCapacity)
 	DebugLogger::getInstance() << "Current capacity is " << currentCapacity << endl; // db
 	/* init empty array of current capacity */
 	hashMapArray = new MapNode<HashValue> * [currentCapacity];
-	// for(unsigned int mapEntry = 0; mapEntry < currentCapacity; mapEntry++)
-	// 	hashMapArray[mapEntry] = nullptr;
+	for(unsigned int mapEntry = 0; mapEntry < currentCapacity; mapEntry++)
+		hashMapArray[mapEntry] = nullptr;
 
 	DebugLogger::getInstance() << "Done Initializing container of size 100\n"; // db 
 
