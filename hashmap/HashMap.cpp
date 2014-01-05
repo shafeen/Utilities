@@ -1,7 +1,7 @@
 
 #include "HashMap.h"
 #include <cassert>
-using namespace shafeen::debug;
+
 
 namespace shafeen {
 namespace data_structures {
@@ -10,7 +10,6 @@ namespace data_structures {
 template <class HashValue>
 HashMap<HashValue>::HashMap()
 {
-	DebugLogger::getInstance() << "Initializing container of size 100\n"; // db 
 	currentCapacity = this->findFirstPrimeAbove(100);
 	DebugLogger::getInstance() << "Current capacity is " << currentCapacity << endl; // db
 	
@@ -18,8 +17,6 @@ HashMap<HashValue>::HashMap()
 	hashMapArray = new MapNode<HashValue> * [currentCapacity];
 	for(unsigned int mapEntry = 0; mapEntry < currentCapacity; mapEntry++)
 		hashMapArray[mapEntry] = nullptr;
-
-	// DebugLogger::getInstance() << "Done Initializing container of size 100\n"; // db 
 }
 
 template <class HashValue>
@@ -27,13 +24,11 @@ HashMap<HashValue>::HashMap(size_t suggestedCapacity)
 {
 	currentCapacity = this->findFirstPrimeAbove(suggestedCapacity);
 	DebugLogger::getInstance() << "Current capacity is " << currentCapacity << endl; // db
+	
 	/* init empty array of current capacity */
 	hashMapArray = new MapNode<HashValue> * [currentCapacity];
 	for(unsigned int mapEntry = 0; mapEntry < currentCapacity; mapEntry++)
 		hashMapArray[mapEntry] = nullptr; 
-
-	DebugLogger::getInstance() << "Done Initializing container of size 100\n"; // db 
-
 }
 
 
@@ -90,6 +85,7 @@ bool HashMap<HashValue>::insert(MapNode<HashValue> *node)
 	{
 		assert(hashMapEntry == nullptr);
 		assert(node != nullptr);
+
 		std::cout << "<insert> Node Inserted @ " << mapIndexForKey << endl;
 		hashMapEntry = node;
 		mapNodesInHashMap++;
@@ -100,7 +96,6 @@ bool HashMap<HashValue>::insert(MapNode<HashValue> *node)
 template <class HashValue>
 bool HashMap<HashValue>::insert(string key, HashValue value)
 {	
-	DebugLogger::getInstance() << "Creating MapNode from [key, value]...\n"; // db
 	MapNode<HashValue> *node = new MapNode<HashValue>(key, value);
 	return(this->insert(node));
 }
@@ -114,8 +109,6 @@ unsigned int HashMap<HashValue>::hash31Function(string key)
 	unsigned int hashValue = 0; 
 
 	unsigned int keySize = key.size();
-	DebugLogger::getInstance() << "keySize = " << keySize << endl; // db
-
 	for(unsigned int i = 0; i < keySize; i++)
 	{
 		hashValue += (unsigned int)key[i]*31;
@@ -130,7 +123,6 @@ template <class HashValue>
 unsigned int HashMap<HashValue>::findBucketToStoreKey(string key)
 {
 	DebugLogger::getInstance() << "finding bucket to store key...\n"; // db
-	DebugLogger::getInstance() << currentCapacity << "\n";
 	unsigned int bucketNum = hash31Function(key) % currentCapacity; 
 	DebugLogger::getInstance() << "bucketNum = "<< bucketNum << "\n"; // db
 	return bucketNum;		

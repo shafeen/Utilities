@@ -7,6 +7,7 @@
 #include <vector>
 
 using namespace std;
+using namespace shafeen::debug;
 
 namespace shafeen {
 namespace data_structures {
