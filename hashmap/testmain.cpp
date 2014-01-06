@@ -74,10 +74,11 @@ void hashMapInsertAndRemoveTest()
 	map->insert(string("key4"), 4);  
 	cout << "CURRENT NODES " << map->size() << endl;
 
-	map->remove("key5");
+	assert(map->remove("key5") == false);
 	cout << "CURRENT NODES " << map->size() << endl;
 
-	map->remove("key4");
+	assert(map->remove("key4") == true);
+	assert(map->remove("key4") == false);
 	cout << "CURRENT NODES " << map->size() << endl;
 
 	assert(map->find("key1") != nullptr);

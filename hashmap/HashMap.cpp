@@ -73,6 +73,7 @@ bool HashMap<HashValue>::remove(string key)
 		delete foundEntry;
 		hashMapArray[indexForKey] = nullptr;
 		mapNodesInHashMap--;
+		return true;
 	}
 
 	return false;
