@@ -63,12 +63,37 @@ void hashMapMultiNodeInsertTest()
 	
 }
 
+void hashMapInsertAndRemoveTest()
+{
+	HashMap<int> *map = new HashMap<int>(100);
+
+	// insert a bunch // <<
+	map->insert(string("key1"), 1);  
+	map->insert(string("key2"), 2);  
+	map->insert(string("key3"), 3);  
+	map->insert(string("key4"), 4);  
+	cout << "CURRENT NODES " << map->size() << endl;
+
+	map->remove("key5");
+	cout << "CURRENT NODES " << map->size() << endl;
+
+	map->remove("key4");
+	cout << "CURRENT NODES " << map->size() << endl;
+
+	assert(map->find("key1") != nullptr);
+	assert(map->find("key2") != nullptr);
+	assert(map->find("key3") != nullptr);
+	assert(map->find("key4") == nullptr);
+
+}
+
 
 int main()
 {
 	// testMapNode();	
 	// hashMapInsertTest();
-	hashMapMultiNodeInsertTest();
-
+	// hashMapMultiNodeInsertTest();
+	hashMapInsertAndRemoveTest();
 
 }
+

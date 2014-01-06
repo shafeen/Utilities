@@ -19,7 +19,6 @@ HashMap.o: HashMap.cpp
 DebugLogger.o: DebugLogger.cpp
 	g++ $(CFLAGS) DebugLogger.cpp $(LDFLAGS)	
 
-
 clean:
 	rm *.o *.out
 

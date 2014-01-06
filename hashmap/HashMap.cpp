@@ -6,13 +6,11 @@
 namespace shafeen {
 namespace data_structures {
 
-
 template <class HashValue>
 HashMap<HashValue>::HashMap()
 {
 	currentCapacity = this->findFirstPrimeAbove(100);
 	DebugLogger::getInstance() << "Current capacity is " << currentCapacity << endl; // db
-	
 	/* init empty array of current capacity */
 	hashMapArray = new MapNode<HashValue> * [currentCapacity];
 	for(unsigned int mapEntry = 0; mapEntry < currentCapacity; mapEntry++)
@@ -50,19 +48,34 @@ HashMap<HashValue>::~HashMap()
 template <class HashValue>
 MapNode<HashValue> * HashMap<HashValue>::find(string key)
 {	
-	cout << "Searching for key: " << key << endl; // db
+	DebugLogger::getInstance() << "Searching for key: " << key.c_str() << endl; 
 
-	// enableDebugOutput();
 	unsigned int mapIndexForKey = findBucketToStoreKey(key);
-	// disableDebugOutput();
 
 	MapNode<HashValue> *foundEntry = nullptr;
 	if (hashMapArray[mapIndexForKey] && hashMapArray[mapIndexForKey]->key == key) 
 		foundEntry = hashMapArray[mapIndexForKey];
 	else
-		cout << "Key not found!\n";
+		DebugLogger::getInstance() << "Key not found!\n";
 
 	return foundEntry;
+}
+
+template <class HashValue>
+bool HashMap<HashValue>::remove(string key)
+{	
+	MapNode<HashValue> *foundEntry = this->find(key);
+	if (foundEntry)
+	{
+		unsigned int indexForKey = findBucketToStoreKey(key); 
+		DebugLogger::getInstance()<< "<remove> Removing node @ "<< indexForKey << endl;
+		
+		delete foundEntry;
+		hashMapArray[indexForKey] = nullptr;
+		mapNodesInHashMap--;
+	}
+
+	return false;
 }
 
 
@@ -78,7 +91,7 @@ bool HashMap<HashValue>::insert(MapNode<HashValue> *node)
 	MapNode<HashValue> *&hashMapEntry = hashMapArray[mapIndexForKey];
 	if(hashMapEntry != nullptr) // for now collisions cause insert to fail -> db
 	{
-		std::cout << "<insert> Collision Occurred\n";
+		DebugLogger::getInstance() << "<insert> Collision Occurred\n";
 		return false;
 	}
 	else
@@ -86,7 +99,7 @@ bool HashMap<HashValue>::insert(MapNode<HashValue> *node)
 		assert(hashMapEntry == nullptr);
 		assert(node != nullptr);
 
-		std::cout << "<insert> Node Inserted @ " << mapIndexForKey << endl;
+		DebugLogger::getInstance()<< "<insert> Node Inserted @ "<< mapIndexForKey << endl;
 		hashMapEntry = node;
 		mapNodesInHashMap++;
 		return true;
@@ -122,7 +135,7 @@ unsigned int HashMap<HashValue>::hash31Function(string key)
 template <class HashValue>
 unsigned int HashMap<HashValue>::findBucketToStoreKey(string key)
 {
-	DebugLogger::getInstance() << "finding bucket to store key...\n"; // db
+	DebugLogger::getInstance() << "finding bucket for key...\n"; // db
 	unsigned int bucketNum = hash31Function(key) % currentCapacity; 
 	DebugLogger::getInstance() << "bucketNum = "<< bucketNum << "\n"; // db
 	return bucketNum;		

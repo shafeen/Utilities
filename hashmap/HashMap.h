@@ -29,6 +29,13 @@ public:
 	// returns nullptr if key not found
 	MapNode<HashValue> * find(string key);
 
+	// removes the [key, value] pair associated 
+	// with the "key" argument -> if one exists 
+	// false -> key does not exist 
+	// true  -> key exists and pair removed
+	bool remove(string key);
+
+
 	// returns the number of MapNodes contained
 	size_t size(){return mapNodesInHashMap;}
 	size_t capacity(){return currentCapacity;}
@@ -48,7 +55,7 @@ private:
 	size_t mapNodesInHashMap;
 	size_t currentCapacity;
 
-	// The actual HashMap container
+	// The actual HashMap array container
 	MapNode<HashValue> **hashMapArray;
 
 	unsigned int findBucketToStoreKey(string key);
