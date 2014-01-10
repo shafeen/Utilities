@@ -44,7 +44,7 @@ HashMap<HashValue>::~HashMap()
 
 
 
-
+// transfers ownership for now when it should not -> should be const *
 template <class HashValue>
 MapNode<HashValue> * HashMap<HashValue>::find(string key)
 {	
