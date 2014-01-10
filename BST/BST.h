@@ -9,6 +9,7 @@ namespace data_structures {
 
 // Binary Search Tree Data Structure
 // This BST is for the <int> type ONLY!
+template <class T>
 class BST {
 public:
 
@@ -18,10 +19,10 @@ public:
 	class BST_Node;
 	BST_Node *head;
 
-	void insert(int);
-	bool exists(int);
-	bool removeSingleOccurence(int);
-	bool removeAllOccurences(int);
+	void insert(T);
+	bool exists(T);
+	bool removeSingleOccurence(T);
+	bool removeAllOccurences(T);
 	
 
 
