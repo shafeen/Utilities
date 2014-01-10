@@ -1,6 +1,6 @@
 
 // #include "DebugLogger.h"
-#include "HashMap.cpp"
+#include "HashMap.h"
 #include <iostream>
 #include <cstdio>
 #include <cassert>

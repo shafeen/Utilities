@@ -17,6 +17,9 @@ HashMap<HashValue>::HashMap()
 		hashMapArray[mapEntry] = nullptr;
 }
 
+template HashMap<int>::HashMap();
+
+
 template <class HashValue>
 HashMap<HashValue>::HashMap(size_t suggestedCapacity)
 {
@@ -28,9 +31,10 @@ HashMap<HashValue>::HashMap(size_t suggestedCapacity)
 	for(unsigned int mapEntry = 0; mapEntry < currentCapacity; mapEntry++)
 		hashMapArray[mapEntry] = nullptr; 
 }
-
+template HashMap<int>::HashMap(size_t suggestedCapacity);
 
 	
+
 
 template <class HashValue>
 HashMap<HashValue>::~HashMap()
@@ -41,6 +45,7 @@ HashMap<HashValue>::~HashMap()
 	
 	delete[] hashMapArray;
 }
+template HashMap<int>::~HashMap();
 
 
 
@@ -60,6 +65,9 @@ MapNode<HashValue> * HashMap<HashValue>::find(string key)
 
 	return foundEntry;
 }
+template MapNode<int> * HashMap<int>::find(string key);
+
+
 
 template <class HashValue>
 bool HashMap<HashValue>::remove(string key)
@@ -78,7 +86,7 @@ bool HashMap<HashValue>::remove(string key)
 
 	return false;
 }
-
+template bool HashMap<int>::remove(string key);
 
 
 
@@ -106,6 +114,9 @@ bool HashMap<HashValue>::insert(MapNode<HashValue> *node)
 		return true;
 	}
 }
+template bool HashMap<int>::insert(MapNode<int> *node);
+
+
 
 template <class HashValue>
 bool HashMap<HashValue>::insert(string key, HashValue value)
@@ -113,6 +124,7 @@ bool HashMap<HashValue>::insert(string key, HashValue value)
 	MapNode<HashValue> *node = new MapNode<HashValue>(key, value);
 	return(this->insert(node));
 }
+template bool HashMap<int>::insert(string key, int value);
 
 
 
@@ -129,6 +141,7 @@ unsigned int HashMap<HashValue>::hash31Function(string key)
 	}
 	return hashValue;
 }
+template unsigned int HashMap<int>::hash31Function(string key);
 
 
 
@@ -141,6 +154,7 @@ unsigned int HashMap<HashValue>::findBucketToStoreKey(string key)
 	DebugLogger::getInstance() << "bucketNum = "<< bucketNum << "\n"; // db
 	return bucketNum;		
 }
+template unsigned int HashMap<int>::findBucketToStoreKey(string key);
 
 
 
@@ -152,6 +166,8 @@ unsigned int HashMap<HashValue>::findFirstPrimeAbove(unsigned int number)
 	// DebugLogger::getInstance() << "returning number "<< number << endl;
 	return number; // TEMPORARY!! db		
 }
+template unsigned int HashMap<int>::findFirstPrimeAbove(unsigned int number);
+
 
 
 template <class HashValue>
@@ -159,11 +175,14 @@ void HashMap<HashValue>::enableDebugOutput()
 {
 	DebugLogger::getInstance().setOutputStream(&std::cout);	
 }
+template void HashMap<int>::enableDebugOutput();
+
 template <class HashValue>
 void HashMap<HashValue>::disableDebugOutput()
 {
 	DebugLogger::getInstance().setOutputStream(nullptr);
 }
+template void HashMap<int>::disableDebugOutput();
 
 
 } /* namespace data_structures */
