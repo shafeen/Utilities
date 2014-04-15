@@ -8,7 +8,7 @@ namespace shafeen {
 namespace data_structures {
 
 // Binary Search Tree Data Structure
-// This BST is for the <int> type ONLY!
+// This BST is for the <int> <uint> <long> <double> types ONLY!
 template <class T>
 class BST {
 public:

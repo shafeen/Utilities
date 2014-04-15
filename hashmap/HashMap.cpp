@@ -16,7 +16,6 @@ HashMap<HashValue>::HashMap()
 	for(unsigned int mapEntry = 0; mapEntry < currentCapacity; mapEntry++)
 		hashMapArray[mapEntry] = nullptr;
 }
-
 template HashMap<int>::HashMap();
 
 
