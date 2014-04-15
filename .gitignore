@@ -12,5 +12,7 @@
 *.la
 *.a
 
-# Default executables
+# various executables
 *.out
+Sockets/client
+Sockets/server
