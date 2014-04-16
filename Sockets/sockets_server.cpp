@@ -34,7 +34,7 @@ int main()
 	cout << "accepting connections."  << endl;
 	listen(mysock, 1);
 	int acceptsock = accept(mysock, 0, 0); // start accepting connections
-	shutdown(mysock, 2);
+	shutdown(mysock, 2); // we wouldn't do this if we wanted more connections
 
 	while(true)
 	{	
