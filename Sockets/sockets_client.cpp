@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 	memset(&serverAddr, 0, sizeof(serverAddr));
 	serverAddr.sin_family = AF_INET;
 	hostent *hp = gethostbyname(argv[1]); // gethostbyname is deprecated
-	memcpy(hp->h_addr, &(serverAddr.sin_addr.s_addr), hp->h_length);
+	memcpy(&(serverAddr.sin_addr.s_addr), hp->h_addr, hp->h_length);
 	serverAddr.sin_port = htons(12345);
 
 	// connect to the server (similar to bind)
