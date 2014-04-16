@@ -1,4 +1,3 @@
-
 #include <sys/types.h>
 #include <sys/socket.h> // bind(...)
 #include <netinet/in.h> // socket stuff
@@ -31,7 +30,7 @@ int main()
 
 
 	// since we are doing this for the server we
-	// are going to listen on our socket for data
+	// are going to listen on our socket for connections
 	cout << "accepting connections."  << endl;
 	listen(mysock, 1);
 	int acceptsock = accept(mysock, 0, 0); // start accepting connections
