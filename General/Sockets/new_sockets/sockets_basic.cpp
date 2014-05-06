@@ -27,9 +27,9 @@
 // 
 
 #include <sys/types.h>
-#include <sys/socket.h>
+#include <sys/socket.h> // socket/bind
+#include <netdb.h> // getaddrinfo
 #include <cstring> // memset
-#include <netdb.h>
 #include <iostream>
 
 using std::cout;
@@ -64,7 +64,6 @@ int main()
 			cout << "cannot create this socket\n";
 			continue;
 		}
-
 		// bind socket (OR connect if this is a client)
 		int bindrv = bind(sock, i->ai_addr, i->ai_addrlen);
 		if(bindrv < 0)
@@ -73,7 +72,6 @@ int main()
 			sock = -1;
 			continue;
 		}
-
 		// if we get here bind worked!
 		break;
 	}	
