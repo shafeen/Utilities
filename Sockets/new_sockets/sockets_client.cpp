@@ -44,6 +44,7 @@ int main()
 		if(sock > 0 && bindrv > 0)
 			break;
 	}     
+	freeaddrinfo(out_info);
 
 	if(sock == -1)
 		return 0;
