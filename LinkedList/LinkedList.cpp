@@ -1,6 +1,9 @@
 #include "LinkedList.h"	
 #include <cassert>
 #include <iostream>
+#include <string>
+
+using std::string;
 
 namespace shafeen {
 namespace data_structures {
@@ -8,10 +11,12 @@ namespace data_structures {
 template <class T>
 LinkedList<T>::LinkedList(T *_nodeData, bool _heapAlloc)
 : nodeData(_nodeData),
-  next(nullptr), 
+  next(nullptr),
+  prev(nullptr), 
   heapAllocated(_heapAlloc)
 {}
 template LinkedList<int>::LinkedList(int *_nodeData, bool _heapAlloc);
+template LinkedList<string>::LinkedList(string *_nodeData, bool _heapAlloc);
 
 template <class T>
 LinkedList<T>::~LinkedList()
@@ -29,6 +34,7 @@ LinkedList<T>::~LinkedList()
 	}
 }
 template LinkedList<int>::~LinkedList();
+template LinkedList<string>::~LinkedList();
 
 template <class T>
 LinkedList<T> * LinkedList<T>::getTailNode()
@@ -39,6 +45,7 @@ LinkedList<T> * LinkedList<T>::getTailNode()
 	return head;
 }
 template LinkedList<int> * LinkedList<int>::getTailNode();
+template LinkedList<string> * LinkedList<string>::getTailNode();
 
 
 

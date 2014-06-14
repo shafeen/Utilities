@@ -12,6 +12,9 @@ public:
 	T *nodeData;
 	LinkedList *next;
 
+	// this allows this class to be used as a Doubly LinkedList
+	LinkedList *prev; 
+
 	// this variable will indicate whether the nodeData stored in this
 	// LinkedList is heap allocated, useful when destructor is called
 	const bool heapAllocated;
