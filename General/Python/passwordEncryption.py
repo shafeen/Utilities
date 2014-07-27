@@ -30,7 +30,7 @@ passwordDigest = bcrypt.hashpw(password, bcrypt.gensalt())
 # users can exit out of this loop using Ctrl + C (quitting the program)
 correctPassword = False
 while not correctPassword:
-	print "\n%s" % ("Enter password: "),
+	print "\n%s" % ("VERIFYING PASSWORD")
 	enteredPassword = getpass.getpass()
 	correctPassword = bcrypt.checkpw(enteredPassword, passwordDigest)
 
