@@ -16,3 +16,7 @@
 *.out
 Sockets/client
 Sockets/server
+
+
+# IDE specific
+.idea/
