@@ -17,6 +17,9 @@
 Sockets/client
 Sockets/server
 
+# JavaScript folder
+JavaScript/NodeJS/node_modules/*
+
 
 # IDE specific
 .idea/
