@@ -20,6 +20,8 @@ Sockets/server
 # JavaScript folder
 JavaScript/NodeJS/node_modules/*
 
+# Ignore all folders in /General/ for now
+General/*
 
 # IDE specific
 .idea/
