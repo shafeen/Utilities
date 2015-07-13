@@ -69,7 +69,27 @@ def haversine_dist_mi_numpy(lonBase, latBase, lonLatList):
 
 # same as haversine_dist_mi_numpy() but lat and lon positions reversed
 def haversine_dist_mi_numpy_latlng(latBase, lonBase, latLonList):
-    return haversine_dist_mi_numpy(lonBase, latBase, latLonList)
+    """
+    Calculate the great circle distance between two points
+    on the earth (specified in decimal degrees)
+    """
+    # convert the list to a numpy array
+    # also converted decimal degrees to radians
+    latLonList = (np.vectorize(radians))(latLonList)
+
+    # convert base decimal degrees to radians
+    lonBase, latBase = map(radians, [lonBase, latBase])
+
+    # haversine formula
+    dlatArray = latLonList[0::2] - latBase
+    dlonArray = latLonList[1::2] - lonBase
+    a = (np.sin(dlatArray/2))**2 + np.cos(latBase) * np.cos(latLonList[0::2]) * (np.sin(dlonArray/2))**2
+    c = 2 * np.arcsin(np.sqrt(a))
+
+    # 6367 km is the radius of the Earth
+    km = 6367 * c
+    mi = km/1.60934
+    return mi
 
 
 def _idx_smallest(someArray):
@@ -110,13 +130,7 @@ def _benchmark_run():
 
 
 
-# functions below limit search domain in various ways:
-
-
-
-
-
-
+# functions below limit/filter search domain in various ways:
 
 
 
