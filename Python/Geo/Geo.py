@@ -131,6 +131,24 @@ def _benchmark_run():
 
 
 # functions below limit/filter search domain in various ways:
+'''
+Need a function that can give me X closest drivers within N miles of the driver.
+'''
+
+
+# find all GPS coords that are within "milesRadius" miles or less
+def getClosestGpsCoords(latBase, lonBase, latLonList, mileRadius):
+    latList, lonList = latLonList[0::2], latLonList[1::2]
+    gpsCoordList = [[latList[i], lonList[i]] for i in range(0, len(latList))]
+
+    haversineDistances = haversine_dist_mi_numpy_latlng(latBase, lonBase, latLonList)
+    haversineIndexes = range(0, len(haversineDistances))
+
+    closestGpsIndexes = [i for i in haversineIndexes if haversineDistances[i] <= mileRadius]
+
+    gpsCoordsWithinRadius = [gpsCoordList[i] for i in closestGpsIndexes]
+    return gpsCoordsWithinRadius
+
 
 
 
