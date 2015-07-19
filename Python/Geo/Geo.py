@@ -129,8 +129,24 @@ def _benchmark_run():
     # 	haversine_dist_mi(lonLat[0][0], lonLat[0][1], lonLat[1][0], lonLat[1][1])
 
 
-
 # functions below limit/filter search domain in various ways:
+
+
+# find all GPS coordinate indexes that are within "milesRadius" miles or less
+# only return the "maxDrivers" closest driver indexes if "maxDrivers" specified
+# NOTE: be aware that "mileRadius" must be a valid number
+def getClosestGpsCoordIndexes(latBase, lonBase, latLonList, mileRadius, maxDrivers=None):
+    haversineDistances = haversine_dist_mi_numpy_latlng(latBase, lonBase, latLonList)
+    haversineIndexes = range(0, len(haversineDistances))
+
+    closestGpsIndexes = [i for i in haversineIndexes if haversineDistances[i] <= mileRadius]
+
+    # limit the number of coordinates if "maxDrivers" is specified
+    if maxDrivers and 0 < maxDrivers < len(closestGpsIndexes):
+        closestGpsIndexes = closestGpsIndexes[0:maxDrivers]
+
+    return closestGpsIndexes
+
 
 # find all GPS coordinates that are within "milesRadius" miles or less
 # only return the "maxDrivers" closest drivers if "maxDrivers" specified
@@ -138,17 +154,9 @@ def getClosestGpsCoords(latBase, lonBase, latLonList, mileRadius, maxDrivers=Non
     latList, lonList = latLonList[0::2], latLonList[1::2]
     gpsCoordList = [[latList[i], lonList[i]] for i in range(0, len(latList))]
 
-    haversineDistances = haversine_dist_mi_numpy_latlng(latBase, lonBase, latLonList)
-    haversineIndexes = range(0, len(haversineDistances))
-
-    closestGpsIndexes = [i for i in haversineIndexes if haversineDistances[i] <= mileRadius]
+    closestGpsIndexes = getClosestGpsCoordIndexes(latBase, lonBase, latLonList, mileRadius, maxDrivers)
 
     gpsCoordsWithinRadius = [gpsCoordList[i] for i in closestGpsIndexes]
-
-    # limit the number of coordinates if "maxDrivers" is specified
-    if maxDrivers and 0 < maxDrivers < len(gpsCoordsWithinRadius):
-        gpsCoordsWithinRadius = gpsCoordsWithinRadius[0:maxDrivers]
-
     return gpsCoordsWithinRadius
 
 
