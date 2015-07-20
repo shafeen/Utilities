@@ -162,13 +162,14 @@ def getGpsCoordIndexesWithinRadius(latBase, lonBase, latLonList, mileRadius, max
 
 # find all GPS coordinates that are within "milesRadius" miles or less
 # only return the "maxDrivers" closest drivers if "maxDrivers" specified
+# NOTE: the returned gps coordinates will be sorted from closest to farthest
 def getGpsCoordsWithinRadius(latBase, lonBase, latLonList, mileRadius, maxDrivers=None):
     latList, lonList = latLonList[0::2], latLonList[1::2]
     gpsCoordList = [[latList[i], lonList[i]] for i in range(0, len(latList))]
 
-    closestGpsIndexes = getGpsCoordIndexesWithinRadius(latBase, lonBase, latLonList, mileRadius, maxDrivers)
+    gpsIndexesWithinRadius = getGpsCoordIndexesWithinRadius(latBase, lonBase, latLonList, mileRadius, maxDrivers)
 
-    gpsCoordsWithinRadius = [gpsCoordList[i] for i in closestGpsIndexes]
+    gpsCoordsWithinRadius = [gpsCoordList[i] for i in gpsIndexesWithinRadius]
     return gpsCoordsWithinRadius
 
 
