@@ -12,9 +12,6 @@ from math import radians, cos, sin, asin, sqrt
 
 
 # Returns dist between 2 points in km
-from twisted.protocols import gps
-
-
 def haversine_dist_km(lon1, lat1, lon2, lat2):
     """
     Calculate the great circle distance between two points
