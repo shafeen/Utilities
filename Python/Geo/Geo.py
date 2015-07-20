@@ -12,6 +12,9 @@ from math import radians, cos, sin, asin, sqrt
 
 
 # Returns dist between 2 points in km
+from twisted.protocols import gps
+
+
 def haversine_dist_km(lon1, lat1, lon2, lat2):
     """
     Calculate the great circle distance between two points
@@ -134,27 +137,36 @@ def _benchmark_run():
 
 # find all GPS coordinate indexes that are within "milesRadius" miles or less
 # only return the "maxDrivers" closest driver indexes if "maxDrivers" specified
+# the "maxDrivers" indexes have to be the closest ones,
+# i.e. if there are 6 total but "maxDrivers" == 2, return the 2 closest indexes
 # NOTE: be aware that "mileRadius" must be a valid number
-def getClosestGpsCoordIndexes(latBase, lonBase, latLonList, mileRadius, maxDrivers=None):
+def getGpsCoordIndexesWithinRadius(latBase, lonBase, latLonList, mileRadius, maxDrivers=None):
     haversineDistances = haversine_dist_mi_numpy_latlng(latBase, lonBase, latLonList)
-    haversineIndexes = range(0, len(haversineDistances))
+    haversineIndexes = range(len(haversineDistances))
 
-    closestGpsIndexes = [i for i in haversineIndexes if haversineDistances[i] <= mileRadius]
+    gpsIndexesWithinRadius = [i for i in haversineIndexes if haversineDistances[i] <= mileRadius]
+
+    # make a sorted list associating every haversineDistance with its index in the array
+    # NOTE: we are only keeping the haversine distances within radius in the list
+    haversineDistIndexTupleList = [(haversineDistances[i], i) for i in gpsIndexesWithinRadius]
+    haversineDistIndexTupleList = sorted(haversineDistIndexTupleList, key=lambda tup: tup[0])
 
     # limit the number of coordinates if "maxDrivers" is specified
-    if maxDrivers and 0 < maxDrivers < len(closestGpsIndexes):
-        closestGpsIndexes = closestGpsIndexes[0:maxDrivers]
+    if maxDrivers and 0 < maxDrivers < len(haversineDistIndexTupleList):
+        haversineDistIndexTupleList = haversineDistIndexTupleList[0:maxDrivers]
 
-    return closestGpsIndexes
+    # gpsIndexesWithinRadius will now be in the order low-to-high for the haversine distances
+    gpsIndexesWithinRadius = [haversineDistIndexTupleList[i][1] for i in range(len(haversineDistIndexTupleList))]
+    return gpsIndexesWithinRadius
 
 
 # find all GPS coordinates that are within "milesRadius" miles or less
 # only return the "maxDrivers" closest drivers if "maxDrivers" specified
-def getClosestGpsCoords(latBase, lonBase, latLonList, mileRadius, maxDrivers=None):
+def getGpsCoordsWithinRadius(latBase, lonBase, latLonList, mileRadius, maxDrivers=None):
     latList, lonList = latLonList[0::2], latLonList[1::2]
     gpsCoordList = [[latList[i], lonList[i]] for i in range(0, len(latList))]
 
-    closestGpsIndexes = getClosestGpsCoordIndexes(latBase, lonBase, latLonList, mileRadius, maxDrivers)
+    closestGpsIndexes = getGpsCoordIndexesWithinRadius(latBase, lonBase, latLonList, mileRadius, maxDrivers)
 
     gpsCoordsWithinRadius = [gpsCoordList[i] for i in closestGpsIndexes]
     return gpsCoordsWithinRadius
