@@ -17,6 +17,10 @@
 Sockets/client
 Sockets/server
 
+# Python generated files
+Python/Geo/Geo.pyc
+
+
 # JavaScript folder
 JavaScript/NodeJS/node_modules/*
 
