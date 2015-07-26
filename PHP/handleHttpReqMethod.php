@@ -24,14 +24,14 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         printRequestMethod();
         parse_str(file_get_contents("php://input"), $put_vars);
         echo json_encode($put_vars);
-        // do something ...
+        // do something ... --> keep idempotence in mind
         break;
 
     case "DELETE":
         printRequestMethod();
         parse_str(file_get_contents("php://input"), $delete_vars);
         echo json_encode($delete_vars);
-        // do something ...
+        // do something ... --> keep idempotence in mind
         break;
 
     default:
