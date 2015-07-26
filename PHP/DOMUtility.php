@@ -20,7 +20,8 @@ class DOMUtility
 
 
     // if attribute does not exist -> return empty string
-    public static function getDomNodeAttributeValue($domNode, $attribute='class') {
+    public static function getDomNodeAttributeValue($domNode, $attribute='class')
+    {
         $numAttributes = $domNode->attributes->length;
         for($i = 0; $i < $numAttributes; $i++) {
             $domNodeAttr = $domNode->attributes->item($i);
