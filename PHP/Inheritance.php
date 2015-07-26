@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: SHAFEEEENZZ
- * Date: 7/26/15
- * Time: 4:49 PM
+ * User: Shafeen M.
  */
 
 abstract class Animal {
