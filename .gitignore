@@ -23,6 +23,7 @@ Python/Geo/Geo.pyc
 
 # JavaScript folder
 JavaScript/NodeJS/node_modules/*
+JavaScript/ChartJS/Chart.js-1.0.2/*
 
 # Ignore all folders in /General/ for now
 General/*
