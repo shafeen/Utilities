@@ -1,0 +1,20 @@
+{
+  "name": "Bootstrap",
+  "version": "0.0.1",
+  "description": "sandbox for bootstrap testing",
+  "main": "index.html",
+  "authors": [
+    "Shafeen M."
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
