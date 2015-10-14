@@ -15,8 +15,7 @@
         <button id="Login">Login</button>
     </form>
 <?
-    }
-    else {
+    } else {
 ?>
     <div id="radiodiv">Click some radio buttons<br/>
         <input type="radio" name="choices" value="red">red<br/>
@@ -31,6 +30,9 @@
     <script>
         $('input[type="radio"]').click(function (e) {
             $(e.target).parent().attr("style", "background-color:" + e.target.value);
+            $.post("session-authorize.php", {}).done(function (data) {
+                location.reload();
+            });
         });
 
         $('button#logout').click(function (e) {
