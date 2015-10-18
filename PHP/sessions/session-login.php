@@ -30,16 +30,23 @@
     <script>
         $('input[type="radio"]').click(function (e) {
             $(e.target).parent().attr("style", "background-color:" + e.target.value);
-            $.post("session-authorize.php", {}).done(function (data) {
+        });
+
+        $('button#logout').click(function (e) {
+            $.post("session-authorize.php", {"logout" : "t"}).done(function (data) {
+                alert("You have successfully logged out!");
                 location.reload();
             });
         });
 
-        $('button#logout').click(function (e) {
-            $.post("session-authorize.php", {"logout" : "true"}).done(function (data) {
-                location.reload();
+        setInterval(function verifySession() {
+            $.post("session-authorize.php", {"verify_session": "t"}).done(function (data) {
+                if ((JSON.parse(data))["session_valid"] == "f") {
+                    alert("Your session has ended!");
+                    location.reload();
+                }
             });
-        });
+        }, 1000);
 
     </script>
 </body>
