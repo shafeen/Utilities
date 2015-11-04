@@ -10,22 +10,21 @@
  *
  */
 
+use framework\components\CleanRequestUrlParser;
+require_once("components/CleanRequestUrlParser.php");
 
-function getRequestUrlPathParamArray() {
-    $explodedPath = explode("/", $_SERVER["REQUEST_URI"]);
-    $cleanExplodedPath = array();
-    foreach ($explodedPath as $pathVar) {
-        if (!empty($pathVar)) {
-            $cleanExplodedPath[] = $pathVar;
-        }
-    }
-    return $cleanExplodedPath;
+function initAndIncludeView() {
+    // parse the url for the module to run
+    // expected path format = {serverroot}/app/{moduleName}
+    $reqPathParamArray = CleanRequestUrlParser::instance()->getExplodedCleanRequestUrl();
+    //print_r($reqPathParamArray);
+
+    // need to define the location for our used components
+    $jQueryPath = "./bower_components/jquery/dist/jquery.min.js";
+    $bootstrapCssPath = "./bower_components/bootstrap/dist/css/bootstrap.min.css";
+    $bootstrapOptionalThemeCssPath = "./bower_components/bootstrap/dist/css/bootstrap-theme.min.css";
+    $bootstrapJavascriptPath = "./bower_components/bootstrap/dist/js/bootstrap.min.js";
+    include("views/html/index.phtml");
 }
 
-
-// parse the url for the module to run
-// expected path format = {serverroot}/app/{moduleName}
-$reqPathParamArray = getRequestUrlPathParamArray();
-print_r($reqPathParamArray);
-
-
+initAndIncludeView();
