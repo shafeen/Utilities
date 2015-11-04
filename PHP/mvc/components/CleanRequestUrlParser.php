@@ -1,5 +1,7 @@
 <?php
 
+namespace framework\components;
+
 /**
  * Created by Shafeen M.
  * Date: 11/2/2015
