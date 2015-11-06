@@ -22,7 +22,7 @@ abstract class BaseModuleController
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             CleanRequestUrlParser::instance()->parseGetVars($offset);
         } else { // assume it is a "POST"
-            CleanRequestUrlParser::instance()->parsePostVars();
+            CleanRequestUrlParser::instance()->parsePostVars($offset);
         }
     }
 
