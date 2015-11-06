@@ -6,7 +6,7 @@ namespace framework\controllers;
 use framework\components\CleanRequestUrlParser;
 require_once("components/CleanRequestUrlParser.php");
 
-abstract class BaseModuleController
+abstract class ModuleController
 {
     protected $explodedPathToModule;
 
