@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: SHAFEEEENZZ
- * Date: 11/7/15
- * Time: 12:25 AM
- */
 
 namespace framework\controllers;
 
