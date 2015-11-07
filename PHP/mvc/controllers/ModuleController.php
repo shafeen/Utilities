@@ -11,7 +11,7 @@ abstract class ModuleController
     protected $explodedPathToModule;
 
     /** @param array $explodedPathToModule */
-    public function construct($explodedPathToModule) {
+    public function __construct($explodedPathToModule) {
         $this->explodedPathToModule = $explodedPathToModule;
         $this->parseRequestVars(count($this->explodedPathToModule));
         $this->run();
