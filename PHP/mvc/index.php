@@ -12,19 +12,9 @@
 
 use framework\components\CleanRequestUrlParser;
 require_once("components/CleanRequestUrlParser.php");
+use framework\controllers\TestController;
+require_once("controllers/TestController.php");
 
-function initAndIncludeView() {
-    // parse the url for the module to run
-    // expected path format = {serverroot}/app/{moduleName}
-    $reqPathParamArray = CleanRequestUrlParser::instance()->getExplodedCleanRequestUrl();
-    //print_r($reqPathParamArray);
-
-    // need to define the location for our used components
-    $jQueryPath = "./bower_components/jquery/dist/jquery.min.js";
-    $bootstrapCssPath = "./bower_components/bootstrap/dist/css/bootstrap.min.css";
-    $bootstrapOptionalThemeCssPath = "./bower_components/bootstrap/dist/css/bootstrap-theme.min.css";
-    $bootstrapJavascriptPath = "./bower_components/bootstrap/dist/js/bootstrap.min.js";
-    include("views/html/index.phtml");
-}
-
-initAndIncludeView();
+$explodedPathToModule = array_slice(CleanRequestUrlParser::instance()->getExplodedCleanRequestUrl(), 0, 4);
+$testController = new TestController($explodedPathToModule);
+$testController->run();
