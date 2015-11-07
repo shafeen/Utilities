@@ -14,7 +14,6 @@ abstract class ModuleController
     public function __construct($explodedPathToModule) {
         $this->explodedPathToModule = $explodedPathToModule;
         $this->parseRequestVars(count($this->explodedPathToModule));
-        $this->run();
     }
 
     /** @param int $offset */
