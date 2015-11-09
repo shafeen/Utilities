@@ -8,6 +8,8 @@ require_once("components/CleanRequestUrlParser.php");
 abstract class ModuleController
 {
     protected $explodedPathToModule;
+    protected $moduleView;
+    protected $moduleModel;
 
     /** @param array $explodedPathToModule */
     public function __construct($explodedPathToModule) {
