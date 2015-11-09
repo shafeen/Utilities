@@ -2,7 +2,6 @@
 
 namespace framework\controllers;
 
-
 use framework\components\CleanRequestUrlParser;
 require_once("components/CleanRequestUrlParser.php");
 
