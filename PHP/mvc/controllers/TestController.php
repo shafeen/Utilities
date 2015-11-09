@@ -2,22 +2,19 @@
 
 namespace framework\controllers;
 
+use framework\controllers\ModuleController;
 require_once("controllers/ModuleController.php");
+
+use framework\views\TestView;
+require_once("views/TestView.php");
 
 class TestController extends ModuleController
 {
     function run() {
-        // parse the url for the module to run
-        // expected path format = {serverroot}/app/{moduleName}
-        $reqPathParamArray = $this->explodedPathToModule;
-        //print_r($reqPathParamArray);
-
-        // need to define the location for our used components
-        $jQueryPath = "bower_components/jquery/dist/jquery.min.js";
-        $bootstrapCssPath = "bower_components/bootstrap/dist/css/bootstrap.min.css";
-        $bootstrapOptionalThemeCssPath = "bower_components/bootstrap/dist/css/bootstrap-theme.min.css";
-        $bootstrapJavascriptPath = "bower_components/bootstrap/dist/js/bootstrap.min.js";
-        include("views/html/index.phtml");
+        $emptyModel = array("reqPathParamArray" => $this->explodedPathToModule);
+        $this->moduleView = new TestView($emptyModel);
+        $this->moduleView->setMainHtmlFile("index.phtml");
+        $this->moduleView->displayContent();
     }
 
 }

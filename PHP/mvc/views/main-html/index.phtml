@@ -5,20 +5,20 @@
     <title>Bootstrap test</title>
 
     <!-- jQuery is REQUIRED -->
-    <script src="<?=$jQueryPath?>"></script>
+    <script src="<?=$this->jQueryPath?>"></script>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="<?=$bootstrapCssPath?>">
+    <link rel="stylesheet" href="<?=$this->bootstrapCssPath?>">
     <!-- Optional theme -->
-    <link rel="stylesheet" href="<?=$bootstrapOptionalThemeCssPath?>">
+    <link rel="stylesheet" href="<?=$this->bootstrapOptionalThemeCssPath?>">
     <!-- Latest compiled and minified JavaScript -->
-    <script src="<?=$bootstrapJavascriptPath?>"></script>
+    <script src="<?=$this->bootstrapJavascriptPath?>"></script>
 
 </head>
 <body>
 
     <div id="btn-group-test" class="btn-group">
-        <? foreach ($reqPathParamArray as $pathParam) { ?>
+        <? foreach ($this->reqPathParamArray as $pathParam) { ?>
         <button type="button" class="btn btn-warning">
             <span class="glyphicon glyphicon-remove"></span> <?=$pathParam?>
         </button>

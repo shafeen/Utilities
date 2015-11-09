@@ -20,7 +20,7 @@ abstract class ModuleView
     abstract protected function extractInfoFromModel(&$model);
 
     function displayContent() {
-        include("views/html/".$this->mainHtmlFile);
+        include("views/main-html/".$this->mainHtmlFile);
     }
 
 }
