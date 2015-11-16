@@ -3,17 +3,18 @@
 namespace framework\controllers;
 
 use framework\controllers\ModuleController;
-require_once("controllers/ModuleController.php");
-
 use framework\views\TestView;
+use framework\models\TestModel;
+require_once("controllers/ModuleController.php");
 require_once("views/TestView.php");
+require_once("models/TestModel.php");
 
 class TestController extends ModuleController
 {
     function run() {
-        $emptyModel = array("reqPathParamArray" => $this->explodedPathToModule);
-        $this->moduleView = new TestView($emptyModel);
-        $this->moduleView->setMainHtmlFile("index.phtml");
+        $this->moduleModel = new TestModel($this->explodedPathToModule);
+        $this->moduleView = new TestView($this->moduleModel);
+        $this->moduleView->setMainHtmlFile("test.phtml");
         $this->moduleView->displayContent();
     }
 
