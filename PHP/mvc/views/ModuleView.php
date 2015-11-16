@@ -13,7 +13,7 @@ abstract class ModuleView
     protected $mainHtmlFile;
 
     function __construct(&$model) {
-        $this->initDependencyPathsMap();
+        $this->initDependencyPaths();
         $this->extractInfoFromModel($model);
     }
 
