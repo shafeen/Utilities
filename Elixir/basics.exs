@@ -37,3 +37,13 @@ addOrMultiply = fn
 end
 addOrMultiply.(2, 10)
 addOrMultiply.(10, 2)
+
+# the conditionals "if" and "unless" are opposites
+# they check for true and false values respectively
+x = 1
+if x == 1 do
+    IO.puts "x is equal to 1"
+end
+unless x == 10 do
+    IO.puts "x is not equal to 10"
+end
