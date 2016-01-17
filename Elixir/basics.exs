@@ -29,3 +29,11 @@ IO.puts Integer.to_string(add.(22, 20)) <> " is the meaning of life"
 # note the use of meaningOfLife even though it was defined outside
 printMeaningOfLife = fn -> IO.puts meaningOfLife end
 printMeaningOfLife.()
+
+# conditionals can be specified in anonymous functions
+addOrMultiply = fn
+    a, b when a < b -> IO.puts (a + b)
+    a, b when a > b -> IO.puts (a * b)
+end
+addOrMultiply.(2, 10)
+addOrMultiply.(10, 2)
