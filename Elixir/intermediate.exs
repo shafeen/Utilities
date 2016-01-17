@@ -1,4 +1,4 @@
-# this is how you define a dictionary-ish (keyword lists)
+# this is how you define a keyword lists (dictionary-ish)
 # since they are simply lists they DON'T offer constant-time lookup
 # keys are ALWAYS atoms
 person = [{:name, "John Doe"}, {:age, 100}]
@@ -24,4 +24,7 @@ IO.puts person[:name]
 person = person -- [name: "John Doe"]
 IO.puts person[:name]
 
-
+# for a true constant time lookup, use maps
+# define a map using the %{ } syntax
+person = %{:name => "Jonathan Doe", :age => "100"}
+IO.puts person[:name] <> " #{person[:age]}"
