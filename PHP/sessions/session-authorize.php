@@ -26,14 +26,12 @@ if (isset($_POST["verify_session"])) {
     echo json_encode(array("session_valid" => "f"));
 
 } else if (isset($_POST["logout"])) {
-//    if(isset($_SESSION['authorized'])) {
-//        unset($_SESSION['authorized']);
-//    }
     session_unset();
     session_destroy();
     header("Location: session-login.php");
 
-} else if ((isset($_POST["username"]) && $_POST["username"] == $correctUsername) || $_SESSION['username']) { // authorize if username == $correctUsername
+} else if ((isset($_POST["username"]) && $_POST["username"] == $correctUsername)
+    || $_SESSION['username']) { // authorize if username == $correctUsername
     if (!isset($_SESSION['authorized'])) {
         $_SESSION['authorized'] = 'true';
         $_SESSION['username'] = $_POST["username"];
@@ -42,7 +40,8 @@ if (isset($_POST["verify_session"])) {
         echo "User Authorized. Redirecting....";
     } else { // if authorized -> verify that only 1 session is running (latest is the only valid one)
         // verify the login_checksum
-        if ($_SESSION['login_checksum'] != getLoginChecksum($correctUsername)) {
+        $username = $_POST["username"];
+        if ($_SESSION['login_checksum'] != getLoginChecksum($username)) {
             unset($_SESSION['authorized']);
             session_unset();
             session_destroy();
