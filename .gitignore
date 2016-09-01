@@ -31,3 +31,4 @@ General/*
 
 # IDE specific
 .idea/
+*.iml
