@@ -3,12 +3,13 @@ public class Main {
     public static void main(String[] args) {
         Trie radixTree = new Trie();
 
-        radixTree.addWord("sam");
-        radixTree.addWord("shafeen");
+        radixTree.addWord("samsonite");
+        radixTree.addWord("shaving");
+        radixTree.addWord("shishkabob");
         radixTree.addWord("sandals");
         radixTree.addWord("shoe");
-        radixTree.addWord("sheikh");
+        radixTree.addWord("shake");
 
-        System.out.println(radixTree.getAllWordsWithPrefix("s"));
+        System.out.println(radixTree.getAllWordsWithPrefix("sh"));
     }
 }

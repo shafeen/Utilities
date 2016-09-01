@@ -10,22 +10,28 @@ public class Trie {
     boolean isWord = false;
     public HashMap<Character, Trie> edges = new HashMap<>();
 
-    public Trie() {}
+    public Trie() {
+    }
 
     public void addWord(String word) {
+        char firstChar = word.charAt(0);
+        // check if this trie already has an edge for the firstChar
+        Trie charNode = this.edges.get(firstChar);
+        if (charNode == null) {
+            charNode = new Trie();
+            this.edges.put(firstChar, charNode);
+        }
+
         boolean wordEndsHere = word.length() == 1;
         if (wordEndsHere) {
-            this.isWord = true;
+            charNode.setAsWord();
         } else {
-            char firstChar = word.charAt(0);
-            // check if this trie already has an edge for the firstChar
-            Trie charNode = this.edges.get(firstChar);
-            if (charNode == null) {
-                this.edges.put(firstChar, new Trie());
-                charNode = new Trie();
-            }
             charNode.addWord(word.substring(1));
         }
+    }
+
+    private void setAsWord() {
+        this.isWord = true;
     }
 
     public List<String> getAllWordsWithPrefix(String prefix) {
@@ -33,7 +39,7 @@ public class Trie {
         char[] prefixChars = prefix.toCharArray();
         Trie curNode = this;
         for (int i = 0; curNode != null && i < prefixChars.length; i++) {
-            curNode = this.edges.get(prefixChars[i]);
+            curNode = curNode.edges.get(prefixChars[i]);
         }
 
         if (curNode != null) {
