@@ -1,5 +1,7 @@
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import xyz.shafeen.spring.AppConfig;
 import xyz.shafeen.spring.Customer;
 import xyz.shafeen.spring.CustomerList;
 
@@ -7,7 +9,20 @@ public class Application {
 
     public static void main(String[] args) {
         //tryXmlConfig();
-        tryAnnotationConfig();
+        //tryAnnotationConfig();
+        tryJavaConfig();
+    }
+
+    private static void tryJavaConfig() {
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        // bean created using java (no xml) config
+        Customer customer = applicationContext.getBean("customer1", Customer.class);
+        System.out.println(customer.getName());
+
+        // bean created using java config (uses the Customer bean created)
+        CustomerList customerList1 = applicationContext.getBean("customerList1", CustomerList.class);
+        System.out.println(customerList1.getCustomer());
 
     }
 
@@ -22,7 +37,6 @@ public class Application {
         CustomerList customerList1 = applicationContext.getBean("customerList1", CustomerList.class);
         System.out.println(customerList1.getCustomer());
     }
-
 
     public static void tryXmlConfig() {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-config.xml");
