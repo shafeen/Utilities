@@ -17,8 +17,9 @@ public class CustomerList {
         this.customer = customer.getCustomer();
     }
 
-    @Autowired
+    @Autowired // <-- this is for the xml anno config
     public CustomerList(Customer customer) {
+        System.out.println("Constructor called with Customer");
         this.customer = customer.getName();
     }
 
@@ -31,6 +32,13 @@ public class CustomerList {
     }
 
     public void setCustomer(String customer) {
+        System.out.println("Constructor called with Customer");
         this.customer = customer;
+    }
+
+    @Autowired // <-- this is for the java based config
+    public void setCustomer(Customer customer) {
+        System.out.println("Setter called with Customer");
+        this.customer = customer.getName();
     }
 }

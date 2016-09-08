@@ -8,7 +8,8 @@ public class AppConfig {
 
     @Bean(name = "customerList1")
     public CustomerList getCustomerList() {
-        return new CustomerList(getCustomer()); // <-- notice the constructor injection
+        // return new CustomerList(getCustomer()); // <-- notice the constructor injection
+        return new CustomerList();
     }
 
     @Bean(name = "customer1")
