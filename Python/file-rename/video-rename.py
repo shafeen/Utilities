@@ -33,7 +33,6 @@ def getPrefixArg():
 
 
 def getDelimiterArg():
-    #TODO: complete & test this function
     PREFIX_ARG = '--delimiter='
     errMsg = 'You must specify: %s!' % PREFIX_ARG
     if len(argv) != 3:
