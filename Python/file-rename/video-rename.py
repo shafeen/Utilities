@@ -118,7 +118,7 @@ def run():
         oldFilenameMinusExt = strjoin(filenameSplit[:-1], '.')
         newFilenameMinusExt = oldFilenameMinusExt
         for fragment in fragmentsToDelete:
-            newFilenameMinusExt = strjoin(newFilenameMinusExt.split(fragment), '')
+            newFilenameMinusExt = strjoin(newFilenameMinusExt.split(fragment), '').strip()
         print 'renaming %s to %s' % (oldFilenameMinusExt+fileExt, newFilenameMinusExt+fileExt)
         # TODO: do the actual rename operation here when production ready!
 
