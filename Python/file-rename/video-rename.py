@@ -19,9 +19,8 @@ def getPrefixFilter(testPrefix):
 
 def getPrefixArg():
     PREFIX_ARG = '--prefix='
-    prefix = ''
     errMsg = 'You must specify: %s!' % PREFIX_ARG
-    if len(argv) != 2:
+    if len(argv) < 2:
         raise RuntimeError(errMsg)
     elif not getPrefixFilter(PREFIX_ARG)(argv[1]):
         raise RuntimeError(errMsg)
@@ -31,6 +30,34 @@ def getPrefixArg():
             raise RuntimeError('the prefix cannot be empty')
         else:
             return prefix
+
+
+def getDelimiterArg():
+    #TODO: complete & test this function
+    PREFIX_ARG = '--delimiter='
+    errMsg = 'You must specify: %s!' % PREFIX_ARG
+    if len(argv) != 3:
+        raise RuntimeError(errMsg)
+    elif not getPrefixFilter(PREFIX_ARG)(argv[2]):
+        raise RuntimeError(errMsg)
+    else:
+        delimiter = strjoin(argv[2].split(PREFIX_ARG), '')
+        if len(delimiter) == 0:
+            raise RuntimeError('the delimiter cannot be empty')
+        elif len(delimiter) > 1:
+            raise RuntimeError('the delimiter must be a single character, you typed "%s"' % delimiter)
+        else:
+            return delimiter
+
+
+def getRequiredArgs():
+    prefix = getPrefixArg()
+    delimiter = getDelimiterArg()
+    if not confirmWithMsg("Use prefix: '%s'? Y/n:" % prefix):
+        exit()
+    if not confirmWithMsg("Use delimiter: '%s'? Y/n:" % delimiter):
+        exit()
+    return [prefix, delimiter]
 
 
 def getOnlyFilesInDir(dirPath):
@@ -49,38 +76,23 @@ def confirmWithMsg(msg):
     return confirmed
 
 
-# filerename(currentDirFiles[2], 'renamed.py')
-
-def run():
-    currentDirFiles = getOnlyFilesInDir(getcwd())
-    print currentDirFiles
-
-    prefix = getPrefixArg()
-    if not confirmWithMsg("Use prefix: '%s'? Y/n:" % prefix):
-        exit()
-
-    filesWithPrefix = getFilesWithPrefix(currentDirFiles, prefix)
-    print "All files in directory with prefix '%s': %s" % (prefix, filesWithPrefix)
-    if not confirmWithMsg('Continue? (Y/n): '):
-        exit()
-
+# find common string fragments in the list of files
+def getCommonFragmentCounts(filenames, delimiter):
     commonFragmentCounts = {}
 
-    # find common string fragments in the list of files
-    for myfile in filesWithPrefix:
+    for myfile in filenames:
         filenameSplit = myfile.split('.')
         fileExt = filenameSplit[-1]
         filenameMinusExt = strjoin(filenameSplit[:-1], '.')
 
-        commonDelimiters = ['.', '_', ' ']
+        commonDelimiters = [delimiter]
         filenameFragments = {()}
         for delimiter in commonDelimiters:
             filenameSplit = filenameMinusExt.split(delimiter)
-            print 'split %s into ' % filenameMinusExt, filenameSplit, 'using %s' % delimiter
+            # print 'split %s into ' % filenameMinusExt, filenameSplit, 'using %s' % delimiter
             for filenameFragment in filenameSplit:
                 filenameFragments.add(filenameFragment)
-
-        print 'all fragments found in file: %s' % myfile, filenameFragments
+        print 'fragments in file: %s' % myfile, filenameFragments
 
         for filenameFragment in filenameFragments:
             if type(filenameFragment) != str:
@@ -88,11 +100,15 @@ def run():
             if filenameFragment in commonFragmentCounts:
                 commonFragmentCounts[filenameFragment] += 1
             else:
-                print 'saving fragment %s' % filenameFragment
+                # print 'saving fragment %s' % filenameFragment
                 commonFragmentCounts[filenameFragment] = 1
 
+    return commonFragmentCounts
+
+
+def getFragmentEliminationList(commonFragmentCounts):
+    # display a list of potential fragments to eliminate
     print 'common fragment counts (> 1):'
-    # form a list of potential fragments to eliminate
     potentialFragmentsToDelete = []
     for fragment, count in commonFragmentCounts.iteritems():
         if count > 1:
@@ -101,28 +117,52 @@ def run():
 
     # ask the user to create the final list of fragments to eliminate
     fragmentsToDelete = []
-    fragmentsToDeletePrompt = 'Fragment to eliminate (q to stop): '
-    userStr = raw_input(fragmentsToDeletePrompt)
+    fragmentDeletePrompt = 'Fragment to eliminate (q to stop): '
+    userStr = raw_input(fragmentDeletePrompt)
     while userStr != 'q':
-        fragmentsToDelete.append(userStr)
+        if userStr in commonFragmentCounts:
+            fragmentsToDelete.append(userStr)
+        else:
+            print 'Invalid fragment chosen, please try again.'
         print fragmentsToDelete
-        userStr = raw_input('Fragment to eliminate (q to stop): ')
+        userStr = raw_input(fragmentDeletePrompt)
 
     if not confirmWithMsg('delete the following fragments? %s (Y/n):' % fragmentsToDelete):
         exit()
+    return fragmentsToDelete
+
+# filerename(currentDirFiles[2], 'renamed.py')
+
+
+def run():
+    currentDirFiles = getOnlyFilesInDir(getcwd())
+    print currentDirFiles
+
+    prefix, delimiter = getRequiredArgs()
+
+    filesWithPrefix = getFilesWithPrefix(currentDirFiles, prefix)
+    print "All files in directory with prefix '%s': \n%s" % (prefix, filesWithPrefix)
+    if not confirmWithMsg('Continue? (Y/n): '):
+        exit()
+
+    commonFragmentCounts = getCommonFragmentCounts(filesWithPrefix, delimiter)
+
+    fragmentsToDelete = getFragmentEliminationList(commonFragmentCounts)
 
     # eliminate the fragments from each of the relevant files
+    renameEnabled = confirmWithMsg('Run in rename mode? Y=yes/n=demo mode : ')
     for myfile in filesWithPrefix:
         filenameSplit = myfile.split('.')
         fileExt = '.' + filenameSplit[-1]
         oldFilenameMinusExt = strjoin(filenameSplit[:-1], '.')
         newFilenameMinusExt = oldFilenameMinusExt
         for fragment in fragmentsToDelete:
-            newFilenameMinusExt = strjoin(newFilenameMinusExt.split(fragment), '').strip()
-        print 'renaming %s to %s' % (oldFilenameMinusExt+fileExt, newFilenameMinusExt+fileExt)
-        # TODO: do the actual rename operation here when production ready!
+            newFilenameMinusExt = strjoin(newFilenameMinusExt.split(fragment), '').strip().strip(delimiter).strip()
+        oldFilename, newFilename = oldFilenameMinusExt+fileExt, newFilenameMinusExt+fileExt
+        print 'renaming %s to %s' % (oldFilename, newFilename)
+        if renameEnabled:  # do the actual rename operation here when production ready!
+            filerename(oldFilename, newFilename)
 
-# TODO: take in a delimiter as well as a prefix using '--split='
 run()
 
 
